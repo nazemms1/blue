@@ -1,73 +1,152 @@
-# React + TypeScript + Vite
+# Module-Blue
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React + TypeScript + Vite project for the Blue Module.
 
-Currently, two official plugins are available:
+## 📦 Project Structure (FSD Architecture)
+Module-Blue/
+├── src/
+│ ├── app/
+│ │ ├── App.tsx
+│ │ ├── main.tsx
+│ │ └── providers/
+│ │ └── index.tsx
+│ │
+│ ├── pages/
+│ │ ├── HomePage/
+│ │ │ └── ui/
+│ │ │ └── HomePage.tsx
+│ │ └── MediaPage/
+│ │ └── ui/
+│ │ └── MediaPage.tsx
+│ │
+│ ├── widgets/
+│ │ ├── ContentWidget/
+│ │ │ ├── ui/
+│ │ │ │ └── ContentWidget.tsx
+│ │ │ ├── model/
+│ │ │ │ └── contentSlice.ts
+│ │ │ └── index.ts
+│ │ └── MediaWidget/
+│ │ ├── ui/
+│ │ │ └── MediaWidget.tsx
+│ │ ├── model/
+│ │ │ └── mediaSlice.ts
+│ │ └── index.ts
+│ │
+│ ├── features/
+│ │ ├── contentEditor/
+│ │ │ ├── ui/
+│ │ │ │ └── ContentEditor.tsx
+│ │ │ ├── model/
+│ │ │ │ └── contentEditorSlice.ts
+│ │ │ └── index.ts
+│ │ └── mediaUploader/
+│ │ ├── ui/
+│ │ │ └── MediaUploader.tsx
+│ │ ├── model/
+│ │ │ └── mediaUploaderSlice.ts
+│ │ └── index.ts
+│ │
+│ ├── entities/
+│ │ ├── content/
+│ │ │ ├── ui/
+│ │ │ │ └── ContentCard.tsx
+│ │ │ ├── model/
+│ │ │ │ └── contentTypes.ts
+│ │ │ └── index.ts
+│ │ └── media/
+│ │ ├── ui/
+│ │ │ └── MediaCard.tsx
+│ │ ├── model/
+│ │ │ └── mediaTypes.ts
+│ │ └── index.ts
+│ │
+│ ├── shared/
+│ │ ├── ui/
+│ │ │ ├── Button/
+│ │ │ ├── Input/
+│ │ │ ├── Modal/
+│ │ │ └── index.ts
+│ │ ├── lib/
+│ │ │ ├── api/
+│ │ │ ├── utils/
+│ │ │ └── helpers/
+│ │ ├── config/
+│ │ │ └── index.ts
+│ │ ├── types/
+│ │ │ └── global.d.ts
+│ │ └── constants/
+│ │ └── index.ts
+│ │
+│ └── index.css
+│
+├── public/
+│ └── media/
+│
+├── index.html
+├── package.json
+├── tsconfig.json
+├── vite.config.ts
+└── README.md
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## React Compiler
+ 
+## 📄 Content & Media
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+This project includes two main sections:
 
-## Expanding the ESLint configuration
+### Content
+- Manages and displays text-based content
+- Handles data presentation and formatting
+- Contains the core information architecture
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Media
+- Handles images, videos, and other media files
+- Manages media assets in `/public/media/` directory
+- Provides responsive media components
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🚀 Getting Started
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Prerequisites
+- Node.js (v18 or higher)
+- npm / yarn / pnpm
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Installation
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+```bash
+# Clone the repository
+git clone <your-repository-url>
+cd Module-Blue
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+# Switch to Blue-Module branch
+git checkout Blue-Module
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+📤 Git Push Instructions
+To push changes to GitLab on Blue-Module branch:
+bash
+# Add all changes
+git add .
+
+# Commit with a message
+git commit -m "Your commit message here"
+
+# Push to GitLab Blue-Module branch
+git push gitlab Blue-Module
+If remote is already set as 'origin':
+bash
+git push origin Blue-Module
+First time setup (if remote not configured):
+bash
+# Add GitLab remote
+git remote add gitlab https://gitlab.com/your-username/your-repository.git
+
+# Or with SSH
+git remote add gitlab git@gitlab.com:your-username/your-repository.git
+
+# Push to Blue-Module branch
+git push gitlab Blue-Module
