@@ -1,9 +1,9 @@
-# Module-Blue
+# Blue-Module
 
 A React + TypeScript + Vite project for the Blue Module.
 
 ## 📦 Project Structure (FSD Architecture)
-Module-Blue/
+Blue-Module/
 ├── src/
 │ ├── app/
 │ │ ├── App.tsx
@@ -116,7 +116,7 @@ This project includes two main sections:
 ```bash
 # Clone the repository
 git clone <your-repository-url>
-cd Module-Blue
+cd Blue-Module
 
 # Switch to Blue-Module branch
 git checkout Blue-Module
