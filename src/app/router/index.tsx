@@ -5,12 +5,10 @@ import { AuthLayout } from "@app/layouts";
 import { ProtectedRoute, PermissionRoute } from "./ProtectedRoute";
 import { LoadingOverlay } from "@shared/ui";
 
-// Top-level pages (lazy via their slice barrel)
-import { LoginPage } from "@pages/login";
+ import { LoginPage } from "@pages/login";
 import { SelectModulePage } from "@pages/select-module";
 
-// Module pages (lazy via each module's pages barrel)
-import {
+ import {
   MediaDashboardPage,
   MediaListPage,
   MediaUploadPage,

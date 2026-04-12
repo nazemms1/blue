@@ -3,8 +3,7 @@ import { useAuthContext } from '@app/providers'
 import type { Permission } from '@shared/types'
 import type { ReactNode } from 'react'
 
-// Redirects to /login if not authenticated
-export function ProtectedRoute({ children }: { children: ReactNode }) {
+ export function ProtectedRoute({ children }: { children: ReactNode }) {
   const { isAuthenticated } = useAuthContext()
   const location = useLocation()
 
@@ -15,8 +14,7 @@ export function ProtectedRoute({ children }: { children: ReactNode }) {
   return <>{children}</>
 }
 
-// Redirects to /select-module if authenticated but missing the required permission
-export function PermissionRoute({
+ export function PermissionRoute({
   permission,
   children,
 }: {
