@@ -108,8 +108,10 @@ This project includes two main sections:
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js (v18 or higher)
-- npm / yarn / pnpm
+- React.ts (v18 or higher)
+- npm 
+
+
 
 ### Installation
 
