@@ -6,54 +6,61 @@ import {
   UnstyledButton,
   Box,
   Avatar,
-} from '@mantine/core'
-import { IconPhoto, IconFileText, IconShieldHalf } from '@tabler/icons-react'
-import type { Permission } from '@shared/types'
+} from "@mantine/core";
+import { IconPhoto, IconFileText, IconShieldHalf } from "@tabler/icons-react";
+import type { Permission } from "@shared/types";
 
 interface TestAccount {
-  name: string
-  email: string
-  password: string
-  role: string
-  permissions: Permission[]
+  name: string;
+  email: string;
+  password: string;
+  role: string;
+  permissions: Permission[];
 }
 
- const TEST_ACCOUNTS: TestAccount[] = [
+const TEST_ACCOUNTS: TestAccount[] = [
   {
-    name: 'Admin User',
-    email: 'admin@blue.dev',
-    password: 'admin123',
-    role: 'Admin',
-    permissions: ['media', 'billing'],
+    name: "Admin User",
+    email: "admin@blue.dev",
+    password: "admin123",
+    role: "Admin",
+    permissions: ["cms", "billing"],
   },
   {
-    name: 'Media Editor',
-    email: 'media@blue.dev',
-    password: 'media123',
-    role: 'Editor',
-    permissions: ['media'],
+    name: "Media Editor",
+    email: "media@blue.dev",
+    password: "media123",
+    role: "Editor",
+    permissions: ["cms"],
   },
   {
-    name: 'Billing Manager',
-    email: 'billing@blue.dev',
-    password: 'billing123',
-    role: 'Editor',
-    permissions: ['billing'],
+    name: "Billing Manager",
+    email: "billing@blue.dev",
+    password: "billing123",
+    role: "Editor",
+    permissions: ["billing"],
   },
-]
+];
 
-const PERMISSION_META: Record<Permission, { label: string; color: string; icon: React.ReactNode }> = {
-  media: { label: 'Media', color: 'violet', icon: <IconPhoto size={10} /> },
-  billing: { label: 'Billing', color: 'blue', icon: <IconFileText size={10} /> },
-}
+const PERMISSION_META: Record<
+  Permission,
+  { label: string; color: string; icon: React.ReactNode }
+> = {
+  cms: { label: "CMS", color: "violet", icon: <IconPhoto size={10} /> },
+  billing: {
+    label: "Billing",
+    color: "blue",
+    icon: <IconFileText size={10} />,
+  },
+};
 
 const ROLE_COLORS: Record<string, string> = {
-  Admin: 'blue',
-  Editor: 'teal',
-}
+  Admin: "blue",
+  Editor: "teal",
+};
 
 interface TestAccountsPanelProps {
-  onSelect: (email: string, password: string) => void
+  onSelect: (email: string, password: string) => void;
 }
 
 export function TestAccountsPanel({ onSelect }: TestAccountsPanelProps) {
@@ -64,15 +71,15 @@ export function TestAccountsPanel({ onSelect }: TestAccountsPanelProps) {
           key={acc.email}
           onClick={() => onSelect(acc.email, acc.password)}
           style={{
-            display: 'block',
-            width: '100%',
-            borderRadius: 'var(--mantine-radius-md)',
-            transition: 'background 120ms ease',
+            display: "block",
+            width: "100%",
+            borderRadius: "var(--mantine-radius-md)",
+            transition: "background 120ms ease",
           }}
           styles={{
             root: {
-              ':hover': {
-                background: 'var(--mantine-color-default-hover)',
+              ":hover": {
+                background: "var(--mantine-color-default-hover)",
               },
             },
           }}
@@ -80,9 +87,9 @@ export function TestAccountsPanel({ onSelect }: TestAccountsPanelProps) {
           <Box
             p="sm"
             style={{
-              border: '1px solid var(--mantine-color-default-border)',
-              borderRadius: 'var(--mantine-radius-md)',
-              transition: 'border-color 120ms ease, box-shadow 120ms ease',
+              border: "1px solid var(--mantine-color-default-border)",
+              borderRadius: "var(--mantine-radius-md)",
+              transition: "border-color 120ms ease, box-shadow 120ms ease",
             }}
           >
             <Group justify="space-between" wrap="nowrap" gap="xs">
@@ -90,7 +97,7 @@ export function TestAccountsPanel({ onSelect }: TestAccountsPanelProps) {
                 <Avatar
                   size={32}
                   radius="xl"
-                  color={ROLE_COLORS[acc.role] ?? 'gray'}
+                  color={ROLE_COLORS[acc.role] ?? "gray"}
                   name={acc.name}
                 />
                 <Stack gap={2} style={{ minWidth: 0 }}>
@@ -101,7 +108,7 @@ export function TestAccountsPanel({ onSelect }: TestAccountsPanelProps) {
                     <Badge
                       size="xs"
                       variant="light"
-                      color={ROLE_COLORS[acc.role] ?? 'gray'}
+                      color={ROLE_COLORS[acc.role] ?? "gray"}
                       leftSection={<IconShieldHalf size={9} />}
                     >
                       {acc.role}
@@ -115,7 +122,7 @@ export function TestAccountsPanel({ onSelect }: TestAccountsPanelProps) {
 
               <Group gap={4} wrap="nowrap" style={{ flexShrink: 0 }}>
                 {acc.permissions.map((p) => {
-                  const meta = PERMISSION_META[p]
+                  const meta = PERMISSION_META[p];
                   return (
                     <Badge
                       key={p}
@@ -126,7 +133,7 @@ export function TestAccountsPanel({ onSelect }: TestAccountsPanelProps) {
                     >
                       {meta.label}
                     </Badge>
-                  )
+                  );
                 })}
               </Group>
             </Group>
@@ -134,5 +141,5 @@ export function TestAccountsPanel({ onSelect }: TestAccountsPanelProps) {
         </UnstyledButton>
       ))}
     </Stack>
-  )
+  );
 }

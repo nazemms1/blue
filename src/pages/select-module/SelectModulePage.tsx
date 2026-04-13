@@ -20,12 +20,12 @@ interface ModuleCard {
 
 const ALL_MODULES: ModuleCard[] = [
   {
-    id: "media",
-    permission: "media",
-    title: "Media",
+    id: "cms",
+    permission: "cms",
+    title: "CMS",
     description:
       "Upload, organise and manage images, videos, and all digital assets for your projects.",
-    href: "/media",
+    href: "/cms",
     icon: <IconPhoto size={28} />,
     color: "violet",
     badge: "Assets",

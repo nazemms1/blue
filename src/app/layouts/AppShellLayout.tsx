@@ -33,13 +33,19 @@ import {
   IconUsers,
   IconUserCheck,
   IconReceipt,
-  IconUpload,
   IconArrowLeft,
   IconCoins,
   IconCreditCard,
 } from "@tabler/icons-react";
+import { useState } from "react";
 import { useAuthContext } from "@app/providers";
 import type { Permission } from "@shared/types";
+import {
+  CMS_WORKSPACE_ITEMS,
+  type CmsNavGroup,
+  type CmsNavItem,
+  type CmsNavLink,
+} from "@modules/cms/navigation/menu";
 import classes from "./AppShellLayout.module.css";
 
 interface NavItem {
@@ -50,7 +56,7 @@ interface NavItem {
 }
 
 const ALL_NAV_ITEMS: NavItem[] = [
-  { label: "Media", href: "/media", icon: IconPhoto, permission: "media" },
+  { label: "CMS", href: "/cms", icon: IconPhoto, permission: "cms" },
   {
     label: "Billing",
     href: "/billing",
@@ -61,25 +67,71 @@ const ALL_NAV_ITEMS: NavItem[] = [
 
 const MODULE_MENUS: Record<string, NavItem[]> = {
   billing: [
-    { label: "Dashboard", href: "/billing", icon: IconLayoutDashboard, permission: "billing" },
-    { label: "Billing Records", href: "/billing/articles", icon: IconReceipt, permission: "billing" },
-    { label: "Departments", href: "/billing/departments", icon: IconBuildingCommunity, permission: "billing" },
-    { label: "Users", href: "/billing/users", icon: IconUsers, permission: "billing" },
-    { label: "Clients", href: "/billing/clients", icon: IconUserCheck, permission: "billing" },
-        { label: "Reports", href: "/billing/reports", icon: IconFileText, permission: "billing" },
+    {
+      label: "Dashboard",
+      href: "/billing",
+      icon: IconLayoutDashboard,
+      permission: "billing",
+    },
+    {
+      label: "Billing Records",
+      href: "/billing/articles",
+      icon: IconReceipt,
+      permission: "billing",
+    },
+    {
+      label: "Departments",
+      href: "/billing/departments",
+      icon: IconBuildingCommunity,
+      permission: "billing",
+    },
+    {
+      label: "Users",
+      href: "/billing/users",
+      icon: IconUsers,
+      permission: "billing",
+    },
+    {
+      label: "Clients",
+      href: "/billing/clients",
+      icon: IconUserCheck,
+      permission: "billing",
+    },
+    {
+      label: "Reports",
+      href: "/billing/reports",
+      icon: IconFileText,
+      permission: "billing",
+    },
 
-    { label: "Payments", href: "/billing/payment", icon: IconCreditCard, permission: "billing" },
+    {
+      label: "Payments",
+      href: "/billing/payment",
+      icon: IconCreditCard,
+      permission: "billing",
+    },
   ],
-  media: [
-    { label: "Dashboard", href: "/media", icon: IconLayoutDashboard, permission: "media" },
-    { label: "Library", href: "/media/library", icon: IconPhoto, permission: "media" },
-    { label: "Upload", href: "/media/upload", icon: IconUpload, permission: "media" },
-  ]
-}
+  cms: [
+    // CMS sidebar menu is now managed from the cms module.
+  ],
+};
 
 const ROUTE_LABELS: Record<string, string> = {
   "select-module": "Home",
-  media: "Media",
+  cms: "CMS",
+  vod: "VOD",
+  music: "Music",
+  streaming: "Streaming",
+  ads: "Ads",
+  movies: "Movies",
+  singers: "Singers",
+  songs: "Songs",
+  series: "Series",
+  plays: "Plays",
+  genres: "Genres",
+  "tv-shows": "TV Shows",
+  radio: "Radio",
+  channels: "Channels",
   billing: "Billing",
   library: "Library",
   upload: "Upload",
@@ -116,6 +168,7 @@ function useBreadcrumbs(pathname: string) {
 
 export function AppShellLayout() {
   const [mobileOpen, { toggle }] = useDisclosure();
+  const [openCmsGroups, setOpenCmsGroups] = useState<Record<string, boolean>>({});
   const { user, can, logout } = useAuthContext();
   const navigate = useNavigate();
   const location = useLocation();
@@ -126,6 +179,94 @@ export function AppShellLayout() {
   const handleLogout = () => {
     logout();
     navigate("/login");
+  };
+
+  const renderModuleLink = (item: NavItem, activeModuleKey: string) => {
+    const isActive =
+      item.href === "/" + activeModuleKey
+        ? location.pathname === item.href
+        : location.pathname.startsWith(item.href);
+    const Icon = item.icon;
+    return (
+      <UnstyledButton
+        key={item.href}
+        onClick={() => navigate(item.href)}
+        className={`${classes.navItem} ${isActive ? classes.navItemActive : ""}`}
+      >
+        <Icon size={20} className={classes.navIcon} stroke={isActive ? 2 : 1.5} />
+        <Text size="sm" fw={isActive ? 600 : 500}>
+          {item.label}
+        </Text>
+      </UnstyledButton>
+    );
+  };
+
+  const renderCmsLink = (item: CmsNavLink, activeModuleKey: string, nested = false) => {
+    const isActive =
+      item.href === "/" + activeModuleKey
+        ? location.pathname === item.href
+        : location.pathname.startsWith(item.href);
+    const Icon = item.icon;
+    return (
+      <UnstyledButton
+        key={item.href}
+        onClick={() => navigate(item.href)}
+        className={`${classes.navItem} ${isActive ? classes.navItemActive : ""}`}
+        style={nested ? { paddingInlineStart: 36 } : undefined}
+      >
+        <Icon size={20} className={classes.navIcon} stroke={isActive ? 2 : 1.5} />
+        <Text size="sm" fw={isActive ? 600 : 500}>
+          {item.label}
+        </Text>
+      </UnstyledButton>
+    );
+  };
+
+  const renderCmsItem = (item: CmsNavItem, activeModuleKey: string) => {
+    if (item.type === "link") {
+      return renderCmsLink(item, activeModuleKey);
+    }
+
+    const group = item as CmsNavGroup;
+    const hasActiveChild = group.children.some((child) =>
+      location.pathname.startsWith(child.href),
+    );
+    const isOpen = openCmsGroups[group.label] ?? group.defaultOpen ?? hasActiveChild;
+    const GroupIcon = group.icon;
+
+    return (
+      <Box key={group.label}>
+        <UnstyledButton
+          onClick={() =>
+            setOpenCmsGroups((prev) => ({
+              ...prev,
+              [group.label]: !isOpen,
+            }))
+          }
+          className={classes.navItem}
+        >
+          <GroupIcon size={20} className={classes.navIcon} />
+          <Text size="sm" fw={600} style={{ flex: 1 }}>
+            {group.label}
+          </Text>
+          <IconChevronRight
+            size={16}
+            className={classes.navIcon}
+            style={{
+              transform: isOpen ? "rotate(90deg)" : "none",
+              transition: "transform 150ms ease",
+            }}
+          />
+        </UnstyledButton>
+        {isOpen && (
+          <Stack gap={4} mt={4}>
+            {group.children
+              .filter((child) => can(child.permission))
+              .map((child) => renderCmsLink(child, activeModuleKey, true))}
+          </Stack>
+        )}
+      </Box>
+    );
   };
 
   return (
@@ -174,29 +315,38 @@ export function AppShellLayout() {
                   separatorMargin={16}
                   visibleFrom="sm"
                 >
-                  <UnstyledButton 
+                  <UnstyledButton
                     onClick={() => navigate("/select-module")}
-                    style={{ 
-                      display: 'flex', 
-                      alignItems: 'center',
-                      color: 'rgba(255,255,255,0.4)',
-                      transition: 'color 150ms ease'
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      color: "rgba(255,255,255,0.4)",
+                      transition: "color 150ms ease",
                     }}
-                    onMouseEnter={(e) => e.currentTarget.style.color = '#60a5fa'}
-                    onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255,255,255,0.4)'}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.color = "#60a5fa")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.color = "rgba(255,255,255,0.4)")
+                    }
                   >
                     <IconLayoutGrid size={20} stroke={2} />
                   </UnstyledButton>
                   {breadcrumbs.map((crumb) =>
                     crumb.isLast ? (
-                      <Badge 
-                        key={crumb.href} 
-                        variant="filled" 
-                        color="blue.8" 
-                        size="lg" 
+                      <Badge
+                        key={crumb.href}
+                        variant="filled"
+                        color="blue.8"
+                        size="lg"
                         radius="md"
                         px={12}
-                        style={{ textTransform: 'none', fontWeight: 800, fontSize: '13px', boxShadow: '0 4px 12px rgba(59, 130, 246, 0.2)' }}
+                        style={{
+                          textTransform: "none",
+                          fontWeight: 800,
+                          fontSize: "13px",
+                          boxShadow: "0 4px 12px rgba(59, 130, 246, 0.2)",
+                        }}
                       >
                         {crumb.label}
                       </Badge>
@@ -216,7 +366,15 @@ export function AppShellLayout() {
                   )}
                 </Breadcrumbs>
               ) : (
-                <Text size="sm" fw={800} c="gray.5" style={{ letterSpacing: '0.02em' }} visibleFrom="sm">Explore Workspace</Text>
+                <Text
+                  size="sm"
+                  fw={800}
+                  c="gray.5"
+                  style={{ letterSpacing: "0.02em" }}
+                  visibleFrom="sm"
+                >
+                  Explore Workspace
+                </Text>
               )}
             </Group>
           </Group>
@@ -224,36 +382,71 @@ export function AppShellLayout() {
           <Group gap="md" wrap="nowrap">
             <Group gap={8} wrap="nowrap" visibleFrom="sm">
               <Tooltip label="Support & Help" withArrow position="bottom">
-                <ActionIcon variant="subtle" className={classes.actionButton} size="lg" radius="md">
+                <ActionIcon
+                  variant="subtle"
+                  className={classes.actionButton}
+                  size="lg"
+                  radius="md"
+                >
                   <IconSettings size={20} stroke={1.5} />
                 </ActionIcon>
               </Tooltip>
-              
+
               <Tooltip label="Notifications" withArrow position="bottom">
-                <Box style={{ position: 'relative' }}>
-                  <ActionIcon variant="subtle" className={classes.actionButton} size="lg" radius="md">
+                <Box style={{ position: "relative" }}>
+                  <ActionIcon
+                    variant="subtle"
+                    className={classes.actionButton}
+                    size="lg"
+                    radius="md"
+                  >
                     <IconBell size={20} stroke={1.5} />
                   </ActionIcon>
-                  <Badge 
-                    size="8px" 
-                    circle 
-                    color="red" 
-                    style={{ position: 'absolute', top: 6, right: 6, border: '2px solid #0f172a' }} 
+                  <Badge
+                    size="8px"
+                    circle
+                    color="red"
+                    style={{
+                      position: "absolute",
+                      top: 6,
+                      right: 6,
+                      border: "2px solid #0f172a",
+                    }}
                   />
                 </Box>
               </Tooltip>
             </Group>
 
-            <Divider orientation="vertical" mx={4} color="rgba(255,255,255,0.1)" />
+            <Divider
+              orientation="vertical"
+              mx={4}
+              color="rgba(255,255,255,0.1)"
+            />
 
-            <Menu shadow="xl" width={260} position="bottom-end" offset={12} withArrow transitionProps={{ transition: 'pop-top-right' }}>
+            <Menu
+              shadow="xl"
+              width={260}
+              position="bottom-end"
+              offset={12}
+              withArrow
+              transitionProps={{ transition: "pop-top-right" }}
+            >
               <Menu.Target>
                 <UnstyledButton className={classes.headerUserButton}>
-                  <Box mr={10} visibleFrom="sm" style={{ textAlign: 'right' }}>
+                  <Box mr={10} visibleFrom="sm" style={{ textAlign: "right" }}>
                     <Text size="xs" fw={800} c="white" lh={1}>
-                      {user?.name?.split(' ')[0]}
+                      {user?.name?.split(" ")[0]}
                     </Text>
-                    <Text size="10px" fw={700} c="blue.4" mt={1} style={{ textTransform: 'uppercase', letterSpacing: '0.02em' }}>
+                    <Text
+                      size="10px"
+                      fw={700}
+                      c="blue.4"
+                      mt={1}
+                      style={{
+                        textTransform: "uppercase",
+                        letterSpacing: "0.02em",
+                      }}
+                    >
                       Online
                     </Text>
                   </Box>
@@ -262,7 +455,7 @@ export function AppShellLayout() {
                     radius="md"
                     variant="gradient"
                     gradient={{ from: "blue.6", to: "cyan.4", deg: 135 }}
-                    style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.3)' }}
+                    style={{ boxShadow: "0 4px 12px rgba(0,0,0,0.3)" }}
                   >
                     {getInitials(user?.name ?? "U")}
                   </Avatar>
@@ -271,7 +464,12 @@ export function AppShellLayout() {
 
               <Menu.Dropdown p={12}>
                 <Group p="xs" mb="xs" gap="md">
-                  <Avatar size={48} radius="lg" variant="gradient" gradient={{ from: "blue.6", to: "cyan.4", deg: 135 }}>
+                  <Avatar
+                    size={48}
+                    radius="lg"
+                    variant="gradient"
+                    gradient={{ from: "blue.6", to: "cyan.4", deg: 135 }}
+                  >
                     {getInitials(user?.name ?? "U")}
                   </Avatar>
                   <Box style={{ flex: 1 }}>
@@ -283,19 +481,24 @@ export function AppShellLayout() {
                     </Text>
                   </Box>
                 </Group>
-                
+
                 <Divider my={10} color="gray.1" />
-                
+
                 <Menu.Label>User Account</Menu.Label>
-                <Menu.Item leftSection={<IconUser size={18} stroke={1.5} />} mb={2}>
+                <Menu.Item
+                  leftSection={<IconUser size={18} stroke={1.5} />}
+                  mb={2}
+                >
                   Personal Profile
                 </Menu.Item>
-                <Menu.Item leftSection={<IconSettings size={18} stroke={1.5} />}>
+                <Menu.Item
+                  leftSection={<IconSettings size={18} stroke={1.5} />}
+                >
                   Security Settings
                 </Menu.Item>
-                
+
                 <Divider my={10} color="gray.1" />
-                
+
                 <Menu.Item
                   leftSection={<IconLogout size={18} stroke={1.5} />}
                   color="red"
@@ -327,7 +530,7 @@ export function AppShellLayout() {
                 radius="xl"
                 variant="gradient"
                 gradient={{ from: "blue.6", to: "cyan.4", deg: 45 }}
-                style={{ boxShadow: '0 4px 12px rgba(59, 130, 246, 0.4)' }}
+                style={{ boxShadow: "0 4px 12px rgba(59, 130, 246, 0.4)" }}
               >
                 <IconLayoutGrid size={20} />
               </ThemeIcon>
@@ -370,10 +573,67 @@ export function AppShellLayout() {
         <AppShell.Section grow component={ScrollArea} px={14} pt={24} pb={12}>
           {(() => {
             const activeModuleKey = ALL_NAV_ITEMS.find((item) =>
-              location.pathname.startsWith(item.href)
+              location.pathname.startsWith(item.href),
             )?.href.replace("/", "");
 
-            const moduleItems = activeModuleKey ? MODULE_MENUS[activeModuleKey] : null;
+            const moduleItems = activeModuleKey
+              ? MODULE_MENUS[activeModuleKey]
+              : null;
+            const moduleKey = activeModuleKey ?? "";
+
+            if (activeModuleKey === "cms") {
+              return (
+                <Stack gap={4}>
+                  <Box px={12} mb={12}>
+                    <Text
+                      size="10px"
+                      fw={800}
+                      c="white"
+                      style={{
+                        letterSpacing: "0.2em",
+                        textTransform: "uppercase",
+                        opacity: 0.9,
+                      }}
+                    >
+                      CMS WORKSPACE
+                    </Text>
+                  </Box>
+                  {CMS_WORKSPACE_ITEMS.filter((item) => can(item.permission)).map((item) =>
+                    renderCmsItem(item, moduleKey),
+                  )}
+
+                  <Box mt={24} px={12}>
+                    <Divider
+                      my="md"
+                      label={
+                        <Text
+                          size="9px"
+                          fw={800}
+                          c="white"
+                          style={{
+                            textTransform: "uppercase",
+                            letterSpacing: "0.1em",
+                            opacity: 0.8,
+                          }}
+                        >
+                          System Tools
+                        </Text>
+                      }
+                      labelPosition="center"
+                      styles={{ label: { backgroundColor: "transparent" } }}
+                    />
+                  </Box>
+
+                  <UnstyledButton
+                    onClick={() => navigate("/select-module")}
+                    className={`${classes.navItem} ${classes.switchButton}`}
+                  >
+                    <IconArrowLeft size={19} className={classes.navIcon} />
+                    <Text size="sm">Switch Module</Text>
+                  </UnstyledButton>
+                </Stack>
+              );
+            }
 
             if (moduleItems) {
               return (
@@ -383,46 +643,41 @@ export function AppShellLayout() {
                       size="10px"
                       fw={800}
                       c="white"
-                      style={{ letterSpacing: "0.2em", textTransform: "uppercase", opacity: 0.9 }}
+                      style={{
+                        letterSpacing: "0.2em",
+                        textTransform: "uppercase",
+                        opacity: 0.9,
+                      }}
                     >
-                      {activeModuleKey} workspace
+                      {moduleKey} workspace
                     </Text>
                   </Box>
                   {moduleItems
                     .filter((item) => can(item.permission))
-                    .map((item) => {
-                      const isActive =
-                        item.href === "/" + activeModuleKey
-                          ? location.pathname === item.href
-                          : location.pathname.startsWith(item.href);
-                      const Icon = item.icon;
-                      return (
-                        <UnstyledButton
-                          key={item.href}
-                          onClick={() => navigate(item.href)}
-                          className={`${classes.navItem} ${isActive ? classes.navItemActive : ""}`}
-                        >
-                          <Icon size={20} className={classes.navIcon} stroke={isActive ? 2 : 1.5} />
-                          <Text size="sm" fw={isActive ? 600 : 500}>
-                            {item.label}
-                          </Text>
-                        </UnstyledButton>
-                      );
-                    })}
+                    .map((item) => renderModuleLink(item, moduleKey))}
 
                   <Box mt={24} px={12}>
-                    <Divider 
-                      my="md" 
+                    <Divider
+                      my="md"
                       label={
-                        <Text size="9px" fw={800} c="white" style={{ textTransform: 'uppercase', letterSpacing: '0.1em', opacity: 0.8 }}>
+                        <Text
+                          size="9px"
+                          fw={800}
+                          c="white"
+                          style={{
+                            textTransform: "uppercase",
+                            letterSpacing: "0.1em",
+                            opacity: 0.8,
+                          }}
+                        >
                           System Tools
                         </Text>
-                      } 
-                      labelPosition="center" 
-                      styles={{ label: { backgroundColor: 'transparent' } }}
+                      }
+                      labelPosition="center"
+                      styles={{ label: { backgroundColor: "transparent" } }}
                     />
                   </Box>
-                  
+
                   <UnstyledButton
                     onClick={() => navigate("/select-module")}
                     className={`${classes.navItem} ${classes.switchButton}`}
@@ -441,7 +696,11 @@ export function AppShellLayout() {
                     size="10px"
                     fw={800}
                     c="white"
-                    style={{ letterSpacing: "0.2em", textTransform: "uppercase", opacity: 0.9 }}
+                    style={{
+                      letterSpacing: "0.2em",
+                      textTransform: "uppercase",
+                      opacity: 0.9,
+                    }}
                   >
                     Available Modules
                   </Text>
@@ -469,10 +728,7 @@ export function AppShellLayout() {
           })()}
         </AppShell.Section>
 
-        <Box
-          p={16}
-          style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
-        >
+        <Box p={16} style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
           <UnstyledButton className={classes.userButton}>
             <Group gap={12} wrap="nowrap" style={{ flex: 1 }}>
               <Avatar
@@ -480,7 +736,10 @@ export function AppShellLayout() {
                 radius="lg"
                 variant="gradient"
                 gradient={{ from: "blue.6", to: "cyan.5", deg: 135 }}
-                style={{ flexShrink: 0, boxShadow: '0 4px 12px rgba(0,0,0,0.2)' }}
+                style={{
+                  flexShrink: 0,
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
+                }}
               >
                 {getInitials(user?.name ?? "U")}
               </Avatar>
@@ -507,8 +766,8 @@ export function AppShellLayout() {
                     whiteSpace: "nowrap",
                     overflow: "hidden",
                     textOverflow: "ellipsis",
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.02em',
+                    textTransform: "uppercase",
+                    letterSpacing: "0.02em",
                   }}
                 >
                   {user?.role}

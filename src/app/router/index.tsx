@@ -7,12 +7,7 @@ import { LoadingOverlay } from "@shared/ui";
 
 import { LoginPage } from "@pages/login";
 import { SelectModulePage } from "@pages/select-module";
-
-import {
-  MediaDashboardPage,
-  MediaListPage,
-  MediaUploadPage,
-} from "@modules/media/pages";
+import { cmsRoutes } from "@modules/cms/router";
 import {
   BillingDashboardPage,
   BillingListPage,
@@ -24,6 +19,7 @@ import {
   BillingPaymentPage,
 } from "@modules/billing/pages";
 
+// eslint-disable-next-line react-refresh/only-export-components
 const S = ({ children }: { children: React.ReactNode }) => (
   <Suspense fallback={<LoadingOverlay fullPage />}>{children}</Suspense>
 );
@@ -61,36 +57,7 @@ export const router = createBrowserRouter([
         ),
       },
 
-      {
-        path: "media",
-        element: (
-          <PermissionRoute permission="media">
-            <S>
-              <MediaDashboardPage />
-            </S>
-          </PermissionRoute>
-        ),
-      },
-      {
-        path: "media/library",
-        element: (
-          <PermissionRoute permission="media">
-            <S>
-              <MediaListPage />
-            </S>
-          </PermissionRoute>
-        ),
-      },
-      {
-        path: "media/upload",
-        element: (
-          <PermissionRoute permission="media">
-            <S>
-              <MediaUploadPage />
-            </S>
-          </PermissionRoute>
-        ),
-      },
+      ...cmsRoutes,
 
       {
         path: "billing",

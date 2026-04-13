@@ -21,7 +21,7 @@ export function useAuth() {
       name: 'Admin User',
       email: credentials.email,
       role: 'admin',
-      permissions: ['media', 'billing'],
+      permissions: ['cms', 'billing'],
     }
     localStorage.setItem(STORAGE_KEY, JSON.stringify(mockUser))
     localStorage.setItem('auth_token', 'mock-jwt-token')

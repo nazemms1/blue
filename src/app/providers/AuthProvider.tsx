@@ -24,7 +24,7 @@ const TEST_ACCOUNTS: TestAccount[] = [
     email: "admin@blue.dev",
     password: "admin123",
     role: "admin",
-    permissions: ["media", "billing"],
+    permissions: ["cms", "billing"],
   },
   {
     id: "2",
@@ -32,7 +32,7 @@ const TEST_ACCOUNTS: TestAccount[] = [
     email: "media@blue.dev",
     password: "media123",
     role: "editor",
-    permissions: ["media"],
+    permissions: ["cms"],
   },
   {
     id: "3",
@@ -126,6 +126,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useAuthContext(): AuthContextValue {
   const ctx = useContext(AuthContext);
   if (!ctx) throw new Error("useAuthContext must be used inside AuthProvider");
