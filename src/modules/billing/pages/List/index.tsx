@@ -4,12 +4,11 @@ import { AppButton } from '@shared/components'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { PageHeader } from '@shared/ui'
-import { useBillingStore } from '../model/store'
-import { BillingStatsBar } from '../widgets/BillingStatsBar'
-import { BillingRecordsTable } from '../widgets/BillingRecordsTable'
-import { DeleteBillingRecord } from '../features/DeleteBillingRecord'
+import { useBillingStore } from '../../model/store'
+import { BillingRecordsTable } from '../../widgets/BillingRecordsTable'
+import { DeleteBillingRecord } from '../../features/DeleteBillingRecord'
 
-export function BillingDashboardPage() {
+export function BillingListPage() {
   const { records, loading, fetchRecords, deleteRecord } = useBillingStore()
   const navigate = useNavigate()
   const [deleteId, setDeleteId] = useState<string | null>(null)
@@ -23,16 +22,14 @@ export function BillingDashboardPage() {
   return (
     <Stack gap="lg">
       <PageHeader
-        title="Billing"
-        description="Manage invoices, payments, and billing records"
+        title="Billing Records"
+        description="View and manage all financial records"
         actions={
           <AppButton leftSection={<IconPlus size={16} />} onClick={() => navigate('/billing/articles/new')}>
             New Record
           </AppButton>
         }
       />
-
-      <BillingStatsBar articles={records} />
 
       <BillingRecordsTable articles={records} loading={loading} onDelete={setDeleteId} />
 

@@ -5,10 +5,10 @@ import { AuthLayout } from "@app/layouts";
 import { ProtectedRoute, PermissionRoute } from "./ProtectedRoute";
 import { LoadingOverlay } from "@shared/ui";
 
- import { LoginPage } from "@pages/login";
+import { LoginPage } from "@pages/login";
 import { SelectModulePage } from "@pages/select-module";
 
- import {
+import {
   MediaDashboardPage,
   MediaListPage,
   MediaUploadPage,
@@ -21,6 +21,7 @@ import {
   BillingUsersPage,
   BillingClientsPage,
   BillingReportsPage,
+  BillingPaymentPage,
 } from "@modules/billing/pages";
 
 const S = ({ children }: { children: React.ReactNode }) => (
@@ -28,7 +29,7 @@ const S = ({ children }: { children: React.ReactNode }) => (
 );
 
 export const router = createBrowserRouter([
-   {
+  {
     path: "/login",
     element: (
       <AuthLayout>
@@ -39,7 +40,7 @@ export const router = createBrowserRouter([
     ),
   },
 
-   {
+  {
     path: "/",
     element: (
       <ProtectedRoute>
@@ -60,7 +61,7 @@ export const router = createBrowserRouter([
         ),
       },
 
-       {
+      {
         path: "media",
         element: (
           <PermissionRoute permission="media">
@@ -161,12 +162,23 @@ export const router = createBrowserRouter([
           </PermissionRoute>
         ),
       },
+
       {
         path: "billing/reports",
         element: (
           <PermissionRoute permission="billing">
             <S>
               <BillingReportsPage />
+            </S>
+          </PermissionRoute>
+        ),
+      },
+      {
+        path: "billing/payment",
+        element: (
+          <PermissionRoute permission="billing">
+            <S>
+              <BillingPaymentPage />
             </S>
           </PermissionRoute>
         ),

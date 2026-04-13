@@ -5,9 +5,9 @@ import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { notifications } from '@mantine/notifications'
 import { PageHeader } from '@shared/ui'
-import { useBillingStore } from '../model/store'
-import { BillingRecordForm } from '../features/BillingRecordForm'
-import type { BillingRecordFormValues } from '../model/types'
+import { useBillingStore } from '../../model/store'
+import { BillingRecordForm } from '../../features/BillingRecordForm'
+import type { BillingRecordFormValues } from '../../model/types'
 
 export function BillingEditorPage() {
   const { id } = useParams<{ id: string }>()
