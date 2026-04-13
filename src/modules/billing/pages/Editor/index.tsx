@@ -5,42 +5,42 @@ import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { notifications } from '@mantine/notifications'
 import { PageHeader } from '@shared/ui'
-import { useContentStore } from '../model/store'
-import { ArticleForm } from '../features/ArticleForm'
-import type { ArticleFormValues } from '../model/types'
+import { useBillingStore } from '../../model/store'
+import { BillingRecordForm } from '../../features/BillingRecordForm'
+import type { BillingRecordFormValues } from '../../model/types'
 
-export function ContentEditorPage() {
+export function BillingEditorPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const { getById, createArticle, updateArticle } = useContentStore()
+  const { getById, createRecord, updateRecord } = useBillingStore()
   const [loading, setLoading] = useState(false)
 
   const existing = id ? getById(id) : null
   const isEditing = Boolean(id && existing)
 
-  const handleSubmit = async (values: ArticleFormValues) => {
+  const handleSubmit = async (values: BillingRecordFormValues) => {
     setLoading(true)
     try {
       if (isEditing && id) {
-        await updateArticle(id, values)
+        await updateRecord(id, values)
         notifications.show({
-          title: 'Article updated',
+          title: 'Record updated',
           message: `"${values.title}" has been saved.`,
           color: 'green',
         })
       } else {
-        const article = await createArticle(values)
+        const record = await createRecord(values)
         notifications.show({
-          title: 'Article created',
-          message: `"${article.title}" has been created.`,
+          title: 'Record created',
+          message: `"${record.title}" has been created.`,
           color: 'green',
         })
       }
-      navigate('/content/articles')
+      navigate('/billing/articles')
     } catch {
       notifications.show({
         title: 'Error',
-        message: 'Failed to save article.',
+        message: 'Failed to save record.',
         color: 'red',
       })
     } finally {
@@ -51,24 +51,24 @@ export function ContentEditorPage() {
   return (
     <Stack gap="lg" maw={860} mx="auto">
       <PageHeader
-        title={isEditing ? 'Edit Article' : 'New Article'}
-        description={isEditing ? `Editing: ${existing?.title}` : 'Create a new article'}
+        title={isEditing ? 'Edit Record' : 'New Record'}
+        description={isEditing ? `Editing: ${existing?.title}` : 'Create a new billing record'}
         actions={
           <AppButton
             variant="secondary"
             leftSection={<IconArrowLeft size={16} />}
-            onClick={() => navigate('/content/articles')}
+            onClick={() => navigate('/billing/articles')}
           >
-            Back to Articles
+            Back to List
           </AppButton>
         }
       />
 
-      <ArticleForm
+      <BillingRecordForm
         initial={existing ?? undefined}
         onSubmit={handleSubmit}
         loading={loading}
-        onCancel={() => navigate('/content/articles')}
+        onCancel={() => navigate('/billing/articles')}
       />
     </Stack>
   )

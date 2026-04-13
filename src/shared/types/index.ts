@@ -25,7 +25,7 @@ export interface SelectOption {
   label: string
 }
 
-export type Permission = 'media' | 'content'
+export type Permission = 'media' | 'billing'
 
 export interface User {
   id: string

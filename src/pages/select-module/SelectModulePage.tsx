@@ -31,15 +31,15 @@ const ALL_MODULES: ModuleCard[] = [
     badge: "Assets",
   },
   {
-    id: "content",
-    permission: "content",
-    title: "Content",
+    id: "billing",
+    permission: "billing",
+    title: "Billing",
     description:
-      "Create, edit, and publish articles, pages, and structured content across your platform.",
-    href: "/content",
+      "Manage invoices, subscriptions, payments, and financial records for your platform.",
+    href: "/billing",
     icon: <IconFileText size={28} />,
     color: "blue",
-    badge: "Articles",
+    badge: "Billing",
   },
 ];
 
