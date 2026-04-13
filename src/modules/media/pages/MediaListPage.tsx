@@ -4,7 +4,7 @@ import { AppButton } from '@shared/components'
 import { useEffect, useState } from 'react'
 import { useDisclosure } from '@mantine/hooks'
 import { PageHeader } from '@shared/ui'
-import { DataTable, type Column } from '@shared/components'
+import { DataTable, type DataTableColumn } from '@shared/ui'
 import { useMediaStore } from '../model/store'
 import { UploadMedia } from '../features/UploadMedia'
 import { DeleteMedia } from '../features/DeleteMedia'
@@ -20,6 +20,7 @@ export function MediaListPage() {
   const { items, loading, fetchItems, deleteItem, uploadItem } = useMediaStore()
   const [uploadOpened, { open: openUpload, close: closeUpload }] = useDisclosure(false)
   const [deleteId, setDeleteId] = useState<string | null>(null)
+  const [search, setSearch] = useState('')
 
   useEffect(() => {
     fetchItems()
@@ -27,80 +28,81 @@ export function MediaListPage() {
 
   const deleteTarget = items.find((i) => i.id === deleteId)
 
-  const columns: Column<MediaItem>[] = [
+  const filteredItems = items.filter(i => 
+    i.name.toLowerCase().includes(search.toLowerCase())
+  )
+
+  const columns: DataTableColumn<MediaItem>[] = [
     {
       key: 'name',
-      header: 'Name',
-      render: (row) => (
+      label: 'Asset Name',
+      render: (_, row) => (
         <Group gap="xs">
-          <IconPhoto size={16} />
-          <Text size="sm">{row.name}</Text>
+          <IconPhoto size={18} color="rgba(0,0,0,0.3)"/>
+          <Text size="sm" fw={700}>{row.name}</Text>
         </Group>
       ),
     },
     {
       key: 'type',
-      header: 'Type',
-      render: (row) => <Badge variant="light" size="sm">{row.type}</Badge>,
-      width: 100,
-    },
-    {
-      key: 'size',
-      header: 'Size',
-      render: (row) => <Text size="sm">{formatBytes(row.size)}</Text>,
-      width: 100,
-    },
-    {
-      key: 'status',
-      header: 'Status',
-      render: (row) => (
-        <Badge color={row.status === 'active' ? 'green' : 'gray'} variant="light" size="sm">
-          {row.status}
-        </Badge>
-      ),
-      width: 100,
-    },
-    {
-      key: 'createdAt',
-      header: 'Uploaded',
-      render: (row) => <Text size="sm">{formatDate(row.createdAt)}</Text>,
+      label: 'Format',
+      render: (val) => <Badge variant="light" size="sm" radius="md">{val}</Badge>,
       width: 120,
     },
     {
-      key: 'actions',
-      header: '',
-      render: (row) => (
-        <ActionIcon
-          variant="subtle"
-          color="red"
-          size="sm"
-          onClick={() => setDeleteId(row.id)}
-        >
-          <IconTrash size={14} />
-        </ActionIcon>
+      key: 'size',
+      label: 'File Size',
+      render: (val) => <Text size="sm" fw={600} c="dimmed">{formatBytes(val)}</Text>,
+      width: 120,
+    },
+    {
+      key: 'status',
+      label: 'Status',
+      render: (val) => (
+        <Badge color={val === 'active' ? 'green' : 'gray'} variant="filled" size="sm" radius="md">
+          {val}
+        </Badge>
       ),
-      width: 48,
+      width: 120,
+    },
+    {
+      key: 'createdAt',
+      label: 'Added Date',
+      render: (val) => <Text size="sm" c="dimmed">{formatDate(val)}</Text>,
+      width: 140,
     },
   ]
 
   return (
     <Stack gap="lg">
       <PageHeader
-        title="Media Library — List"
-        description="Tabular view of all media assets"
+        title="Media Library"
+        description="View and manage all uploaded digital assets"
         actions={
           <AppButton leftSection={<IconUpload size={16} />} onClick={openUpload}>
-            Upload
+            Upload Asset
           </AppButton>
         }
       />
 
       <DataTable
         columns={columns}
-        data={items}
-        rowKey="id"
+        data={filteredItems}
         loading={loading}
-        emptyMessage="No media assets uploaded yet."
+        onSearch={setSearch}
+        searchPlaceholder="Find asset by name..."
+        rowActions={(row) => (
+          <ActionIcon
+            variant="subtle"
+            color="red"
+            size="md"
+            onClick={() => setDeleteId(row.id)}
+          >
+            <IconTrash size={18} />
+          </ActionIcon>
+        )}
+        emptyMessage="Library is empty"
+        emptyDescription="Start by uploading your first media file"
       />
 
       <UploadMedia

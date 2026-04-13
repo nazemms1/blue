@@ -13,31 +13,25 @@ export const BillingEditorPage = lazy(() =>
 )
 
 export const BillingDepartmentsPage = lazy(() =>
-  import('./Placeholder').then((m) => ({ 
-    default: () => m.BillingPlaceholderPage({ title: 'Departments', description: 'Manage billing departments and cost centers' }) 
-  }))
+  import('./Departments').then((m) => ({ default: m.BillingDepartmentsPage }))
 )
 
 export const BillingUsersPage = lazy(() =>
-  import('./Placeholder').then((m) => ({ 
-    default: () => m.BillingPlaceholderPage({ title: 'Users', description: 'Manage billing users and access permissions' }) 
-  }))
+  import('./Users').then((m) => ({ default: m.BillingUsersPage }))
 )
 
 export const BillingClientsPage = lazy(() =>
-  import('./Placeholder').then((m) => ({ 
-    default: () => m.BillingPlaceholderPage({ title: 'Clients', description: 'Manage billing clients and accounts' }) 
-  }))
+  import('./Clients').then((m) => ({ default: m.BillingClientsPage }))
 )
 
 export const BillingReportsPage = lazy(() =>
-  import('./Placeholder').then((m) => ({ 
-    default: () => m.BillingPlaceholderPage({ title: 'Reports', description: 'View and export billing and financial reports' }) 
-  }))
+  import('./Reports').then((m) => ({ default: m.BillingReportsPage }))
 )
 
 export const BillingPaymentPage = lazy(() =>
-  import('./Placeholder').then((m) => ({ 
-    default: () => m.BillingPlaceholderPage({ title: 'Payment', description: 'Manage payments and billing transactions' }) 
-  }))
+  import('./Payments').then((m) => ({ default: m.BillingPaymentPage }))
+)
+
+export const BillingDetailsPage = lazy(() =>
+  import('./Details/BillingDetailsPage').then((m) => ({ default: m.BillingDetailsPage }))
 )
