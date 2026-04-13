@@ -1,23 +1,23 @@
 import { Group, Select, Text } from '@mantine/core'
 import { useState } from 'react'
-import type { Article } from '../model/types'
+import type { BillingRecord } from '../model/types'
 import { DataTable, type Column, SearchInput } from '@shared/components'
-import { ArticleRowActions, ArticleStatusBadge, ArticleMetaText } from '../entities/ArticleRow'
+import { BillingRecordRowActions, BillingRecordStatusBadge, BillingRecordMetaText } from '../entities/BillingRecordRow'
 
-interface ArticlesTableProps {
-  articles: Article[]
+interface BillingRecordsTableProps {
+  articles: BillingRecord[]
   loading?: boolean
   onDelete: (id: string) => void
 }
 
 const STATUS_FILTER_OPTIONS = [
   { value: '', label: 'All statuses' },
-  { value: 'draft', label: 'Draft' },
-  { value: 'published', label: 'Published' },
-  { value: 'archived', label: 'Archived' },
+  { value: 'pending', label: 'Pending' },
+  { value: 'paid', label: 'Paid' },
+  { value: 'canceled', label: 'Canceled' },
 ]
 
-export function ArticlesTable({ articles, loading, onDelete }: ArticlesTableProps) {
+export function BillingRecordsTable({ articles, loading, onDelete }: BillingRecordsTableProps) {
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState('')
 
@@ -30,7 +30,7 @@ export function ArticlesTable({ articles, loading, onDelete }: ArticlesTableProp
     return matchesSearch && matchesStatus
   })
 
-  const columns: Column<Article>[] = [
+  const columns: Column<BillingRecord>[] = [
     {
       key: 'title',
       header: 'Title',
@@ -39,14 +39,14 @@ export function ArticlesTable({ articles, loading, onDelete }: ArticlesTableProp
           <Text size="sm" fw={500} lineClamp={1}>
             {row.title}
           </Text>
-          <ArticleMetaText article={row} />
+          <BillingRecordMetaText article={row} />
         </div>
       ),
     },
     {
       key: 'status',
       header: 'Status',
-      render: (row) => <ArticleStatusBadge status={row.status} />,
+      render: (row) => <BillingRecordStatusBadge status={row.status} />,
       width: 110,
     },
     {
@@ -58,7 +58,7 @@ export function ArticlesTable({ articles, loading, onDelete }: ArticlesTableProp
     {
       key: 'actions',
       header: '',
-      render: (row) => <ArticleRowActions article={row} onDelete={onDelete} />,
+      render: (row) => <BillingRecordRowActions article={row} onDelete={onDelete} />,
       width: 80,
     },
   ]
@@ -66,7 +66,7 @@ export function ArticlesTable({ articles, loading, onDelete }: ArticlesTableProp
   return (
     <div>
       <Group mb="md" gap="sm">
-        <SearchInput value={search} onChange={setSearch} placeholder="Search articles…" />
+        <SearchInput value={search} onChange={setSearch} placeholder="Search records…" />
         <Select
           data={STATUS_FILTER_OPTIONS}
           value={statusFilter}
@@ -82,7 +82,7 @@ export function ArticlesTable({ articles, loading, onDelete }: ArticlesTableProp
         data={filtered}
         rowKey="id"
         loading={loading}
-        emptyMessage="No articles found."
+        emptyMessage="No billing records found."
       />
     </div>
   )

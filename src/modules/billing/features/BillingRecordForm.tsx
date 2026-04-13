@@ -10,25 +10,24 @@ import {
 } from '@mantine/core'
 import { AppButton } from '@shared/components'
 import { useState } from 'react'
-import type { Article, ArticleFormValues } from '../model/types'
+import type { BillingRecord, BillingRecordFormValues } from '../model/types'
 
 const STATUS_OPTIONS = [
-  { value: 'draft', label: 'Draft' },
-  { value: 'published', label: 'Published' },
-  { value: 'archived', label: 'Archived' },
+  { value: 'pending', label: 'Pending' },
+  { value: 'paid', label: 'Paid' },
+  { value: 'canceled', label: 'Canceled' },
 ]
 
 const CATEGORY_OPTIONS = [
-  { value: 'Technology', label: 'Technology' },
-  { value: 'Design', label: 'Design' },
-  { value: 'Business', label: 'Business' },
-  { value: 'Marketing', label: 'Marketing' },
-  { value: 'News', label: 'News' },
+  { value: 'Fees', label: 'Fees' },
+  { value: 'Subscription', label: 'Subscription' },
+  { value: 'One-time', label: 'One-time' },
+  { value: 'Refund', label: 'Refund' },
 ]
 
-interface ArticleFormProps {
-  initial?: Article
-  onSubmit: (values: ArticleFormValues) => Promise<void>
+interface BillingRecordFormProps {
+  initial?: BillingRecord
+  onSubmit: (values: BillingRecordFormValues) => Promise<void>
   loading?: boolean
   onCancel?: () => void
 }
@@ -37,19 +36,19 @@ function slugify(text: string): string {
   return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
 }
 
-export function ArticleForm({ initial, onSubmit, loading, onCancel }: ArticleFormProps) {
-  const [values, setValues] = useState<ArticleFormValues>({
+export function BillingRecordForm({ initial, onSubmit, loading, onCancel }: BillingRecordFormProps) {
+  const [values, setValues] = useState<BillingRecordFormValues>({
     title: initial?.title ?? '',
     slug: initial?.slug ?? '',
     excerpt: initial?.excerpt ?? '',
     body: initial?.body ?? '',
-    status: initial?.status ?? 'draft',
+    status: initial?.status ?? 'pending',
     category: initial?.category ?? '',
     tags: initial?.tags ?? [],
   })
-  const [errors, setErrors] = useState<Partial<Record<keyof ArticleFormValues, string>>>({})
+  const [errors, setErrors] = useState<Partial<Record<keyof BillingRecordFormValues, string>>>({})
 
-  const set = <K extends keyof ArticleFormValues>(key: K, value: ArticleFormValues[K]) =>
+  const set = <K extends keyof BillingRecordFormValues>(key: K, value: BillingRecordFormValues[K]) =>
     setValues((prev) => ({ ...prev, [key]: value }))
 
   const validate = (): boolean => {
@@ -72,12 +71,12 @@ export function ArticleForm({ initial, onSubmit, loading, onCancel }: ArticleFor
       <Stack gap="lg">
         <Card shadow="sm" p="lg" radius="md" withBorder>
           <Title order={5} mb="md">
-            Article details
+            Record details
           </Title>
           <Stack gap="md">
             <TextInput
               label="Title"
-              placeholder="Enter article title"
+              placeholder="Enter record title"
               value={values.title}
               error={errors.title}
               onChange={(e) => {
@@ -98,7 +97,7 @@ export function ArticleForm({ initial, onSubmit, loading, onCancel }: ArticleFor
             />
 
             <Textarea
-              label="Excerpt"
+              label="Short Description"
               placeholder="Short description for listings"
               value={values.excerpt}
               onChange={(e) => set('excerpt', e.currentTarget.value)}
@@ -107,8 +106,8 @@ export function ArticleForm({ initial, onSubmit, loading, onCancel }: ArticleFor
             />
 
             <Textarea
-              label="Body"
-              placeholder="Article content (Markdown supported)"
+              label="Details"
+              placeholder="Record details (Markdown supported)"
               value={values.body}
               onChange={(e) => set('body', e.currentTarget.value)}
               minRows={8}
@@ -120,14 +119,14 @@ export function ArticleForm({ initial, onSubmit, loading, onCancel }: ArticleFor
 
         <Card shadow="sm" p="lg" radius="md" withBorder>
           <Title order={5} mb="md">
-            Publishing
+            Billing
           </Title>
           <Stack gap="md">
             <Select
               label="Status"
               data={STATUS_OPTIONS}
               value={values.status}
-              onChange={(v) => set('status', (v as ArticleFormValues['status']) ?? 'draft')}
+              onChange={(v) => set('status', (v as BillingRecordFormValues['status']) ?? 'pending')}
             />
 
             <Select
@@ -156,7 +155,7 @@ export function ArticleForm({ initial, onSubmit, loading, onCancel }: ArticleFor
             </AppButton>
           )}
           <AppButton type="submit" loading={loading}>
-            {initial ? 'Save changes' : 'Create article'}
+            {initial ? 'Save changes' : 'Create record'}
           </AppButton>
         </Group>
       </Stack>

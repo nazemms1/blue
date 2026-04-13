@@ -14,10 +14,14 @@ import { SelectModulePage } from "@pages/select-module";
   MediaUploadPage,
 } from "@modules/media/pages";
 import {
-  ContentDashboardPage,
-  ContentListPage,
-  ContentEditorPage,
-} from "@modules/content/pages";
+  BillingDashboardPage,
+  BillingListPage,
+  BillingEditorPage,
+  BillingDepartmentsPage,
+  BillingUsersPage,
+  BillingClientsPage,
+  BillingReportsPage,
+} from "@modules/billing/pages";
 
 const S = ({ children }: { children: React.ReactNode }) => (
   <Suspense fallback={<LoadingOverlay fullPage />}>{children}</Suspense>
@@ -88,41 +92,81 @@ export const router = createBrowserRouter([
       },
 
       {
-        path: "content",
+        path: "billing",
         element: (
-          <PermissionRoute permission="content">
+          <PermissionRoute permission="billing">
             <S>
-              <ContentDashboardPage />
+              <BillingDashboardPage />
             </S>
           </PermissionRoute>
         ),
       },
       {
-        path: "content/articles",
+        path: "billing/articles",
         element: (
-          <PermissionRoute permission="content">
+          <PermissionRoute permission="billing">
             <S>
-              <ContentListPage />
+              <BillingListPage />
             </S>
           </PermissionRoute>
         ),
       },
       {
-        path: "content/articles/new",
+        path: "billing/articles/new",
         element: (
-          <PermissionRoute permission="content">
+          <PermissionRoute permission="billing">
             <S>
-              <ContentEditorPage />
+              <BillingEditorPage />
             </S>
           </PermissionRoute>
         ),
       },
       {
-        path: "content/articles/:id/edit",
+        path: "billing/articles/:id/edit",
         element: (
-          <PermissionRoute permission="content">
+          <PermissionRoute permission="billing">
             <S>
-              <ContentEditorPage />
+              <BillingEditorPage />
+            </S>
+          </PermissionRoute>
+        ),
+      },
+      {
+        path: "billing/departments",
+        element: (
+          <PermissionRoute permission="billing">
+            <S>
+              <BillingDepartmentsPage />
+            </S>
+          </PermissionRoute>
+        ),
+      },
+      {
+        path: "billing/users",
+        element: (
+          <PermissionRoute permission="billing">
+            <S>
+              <BillingUsersPage />
+            </S>
+          </PermissionRoute>
+        ),
+      },
+      {
+        path: "billing/clients",
+        element: (
+          <PermissionRoute permission="billing">
+            <S>
+              <BillingClientsPage />
+            </S>
+          </PermissionRoute>
+        ),
+      },
+      {
+        path: "billing/reports",
+        element: (
+          <PermissionRoute permission="billing">
+            <S>
+              <BillingReportsPage />
             </S>
           </PermissionRoute>
         ),

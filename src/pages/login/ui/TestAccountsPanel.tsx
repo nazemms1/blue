@@ -24,7 +24,7 @@ interface TestAccount {
     email: 'admin@blue.dev',
     password: 'admin123',
     role: 'Admin',
-    permissions: ['media', 'content'],
+    permissions: ['media', 'billing'],
   },
   {
     name: 'Media Editor',
@@ -34,17 +34,17 @@ interface TestAccount {
     permissions: ['media'],
   },
   {
-    name: 'Content Editor',
-    email: 'content@blue.dev',
-    password: 'content123',
+    name: 'Billing Manager',
+    email: 'billing@blue.dev',
+    password: 'billing123',
     role: 'Editor',
-    permissions: ['content'],
+    permissions: ['billing'],
   },
 ]
 
 const PERMISSION_META: Record<Permission, { label: string; color: string; icon: React.ReactNode }> = {
   media: { label: 'Media', color: 'violet', icon: <IconPhoto size={10} /> },
-  content: { label: 'Content', color: 'blue', icon: <IconFileText size={10} /> },
+  billing: { label: 'Billing', color: 'blue', icon: <IconFileText size={10} /> },
 }
 
 const ROLE_COLORS: Record<string, string> = {

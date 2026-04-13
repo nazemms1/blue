@@ -1,22 +1,22 @@
 import { Badge, Text, Group, ActionIcon } from '@mantine/core'
 import { IconEdit, IconTrash } from '@tabler/icons-react'
 import { useNavigate } from 'react-router-dom'
-import type { Article } from '../model/types'
+import type { BillingRecord } from '../model/types'
 import { formatDate } from '@shared/utils'
 
-interface ArticleRowActionsProps {
-  article: Article
+interface BillingRecordRowActionsProps {
+  article: BillingRecord
   onDelete: (id: string) => void
 }
 
-export function ArticleRowActions({ article, onDelete }: ArticleRowActionsProps) {
+export function BillingRecordRowActions({ article, onDelete }: BillingRecordRowActionsProps) {
   const navigate = useNavigate()
   return (
     <Group gap={4} wrap="nowrap">
       <ActionIcon
         variant="subtle"
         size="sm"
-        onClick={() => navigate(`/content/articles/${article.id}/edit`)}
+        onClick={() => navigate(`/billing/articles/${article.id}/edit`)}
       >
         <IconEdit size={14} />
       </ActionIcon>
@@ -33,12 +33,12 @@ export function ArticleRowActions({ article, onDelete }: ArticleRowActionsProps)
 }
 
 const statusColors = {
-  draft: 'yellow',
-  published: 'green',
-  archived: 'gray',
+  pending: 'yellow',
+  paid: 'green',
+  canceled: 'gray',
 } as const
 
-export function ArticleStatusBadge({ status }: { status: Article['status'] }) {
+export function BillingRecordStatusBadge({ status }: { status: BillingRecord['status'] }) {
   return (
     <Badge color={statusColors[status]} variant="light" size="sm">
       {status}
@@ -46,7 +46,7 @@ export function ArticleStatusBadge({ status }: { status: Article['status'] }) {
   )
 }
 
-export function ArticleMetaText({ article }: { article: Article }) {
+export function BillingRecordMetaText({ article }: { article: BillingRecord }) {
   return (
     <Group gap="xs">
       <Text size="xs" c="dimmed">

@@ -1,32 +1,32 @@
 import type { BaseEntity } from '@shared/types'
 
-export type ArticleStatus = 'draft' | 'published' | 'archived'
+export type BillingStatus = 'pending' | 'paid' | 'canceled'
 
-export interface Article extends BaseEntity {
+export interface BillingRecord extends BaseEntity {
   title: string
   slug: string
   excerpt: string
   body: string
-  status: ArticleStatus
+  status: BillingStatus
   author: string
   category: string
   tags: string[]
   publishedAt?: string
 }
 
-export interface ArticleFormValues {
+export interface BillingRecordFormValues {
   title: string
   slug: string
   excerpt: string
   body: string
-  status: ArticleStatus
+  status: BillingStatus
   category: string
   tags: string[]
 }
 
-export interface ContentFilters {
+export interface BillingFilters {
   search?: string
-  status?: ArticleStatus | ''
+  status?: BillingStatus | ''
   category?: string
   page?: number
   limit?: number
