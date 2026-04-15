@@ -1,2 +1,2 @@
-export { CmsGrid } from "./CmsGrid";
-export { CmsStatsBar } from "./CmsStatsBar";
+export { CmsGrid } from "./asset-grid";
+export { CmsStatsBar } from "./asset-stats";

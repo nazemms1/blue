@@ -1,0 +1,1 @@
+export { cmsRoutes } from "./routes";

@@ -45,7 +45,7 @@ import {
   type CmsNavGroup,
   type CmsNavItem,
   type CmsNavLink,
-} from "@modules/cms/navigation/menu";
+} from "@modules/cms";
 import classes from "./AppShellLayout.module.css";
 
 interface NavItem {
@@ -729,7 +729,7 @@ export function AppShellLayout() {
         </AppShell.Section>
 
         <Box p={16} style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-          <UnstyledButton className={classes.userButton}>
+          <Box className={classes.userButton}>
             <Group gap={12} wrap="nowrap" style={{ flex: 1 }}>
               <Avatar
                 size={38}
@@ -785,7 +785,7 @@ export function AppShellLayout() {
                 </ActionIcon>
               </Tooltip>
             </Group>
-          </UnstyledButton>
+          </Box>
         </Box>
       </AppShell.Navbar>
 

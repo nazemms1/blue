@@ -7,7 +7,8 @@ import { LoadingOverlay } from "@shared/ui";
 
 import { LoginPage } from "@pages/login";
 import { SelectModulePage } from "@pages/select-module";
-import { cmsRoutes } from "@modules/cms/router";
+import { cmsRoutes } from "@modules/cms";
+import { AppErrorFallback } from "@app/ui/AppErrorFallback";
 import {
   BillingDashboardPage,
   BillingListPage,
@@ -27,6 +28,7 @@ const S = ({ children }: { children: React.ReactNode }) => (
 export const router = createBrowserRouter([
   {
     path: "/login",
+    errorElement: <AppErrorFallback />,
     element: (
       <AuthLayout>
         <S>
@@ -38,6 +40,7 @@ export const router = createBrowserRouter([
 
   {
     path: "/",
+    errorElement: <AppErrorFallback />,
     element: (
       <ProtectedRoute>
         <AppShellLayout />
