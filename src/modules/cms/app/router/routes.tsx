@@ -20,10 +20,9 @@ import {
   CmsStreamingGenresPage,
 } from "../../pages";
 import { CMS_ROUTES } from "../config/routes";
-import { CmsErrorFallback } from "../ui/CmsErrorFallback";
+import { CmsErrorFallback } from "../CmsErrorFallback";
 
 const withCmsSuspense = (children: React.ReactNode) => (
-  // This wrapper isolates CMS render failures so AppShell + other modules keep running.
   <ErrorBoundary FallbackComponent={CmsErrorFallback}>
     <Suspense fallback={<LoadingOverlay fullPage />}>{children}</Suspense>
   </ErrorBoundary>

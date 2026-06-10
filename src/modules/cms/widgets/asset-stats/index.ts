@@ -1,1 +1,1 @@
-export { CmsStatsBar } from "./ui/CmsStatsBar";
+export { CmsStatsBar } from "./CmsStatsBar";

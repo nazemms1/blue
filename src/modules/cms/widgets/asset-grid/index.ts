@@ -1,1 +1,1 @@
-export { CmsGrid } from "./ui/CmsGrid";
+export { CmsGrid } from "./CmsGrid";

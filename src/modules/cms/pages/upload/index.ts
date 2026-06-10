@@ -1,1 +1,1 @@
-export { CmsUploadPage } from "./ui/CmsUploadPage";
+export { CmsUploadPage } from "./CmsUploadPage";

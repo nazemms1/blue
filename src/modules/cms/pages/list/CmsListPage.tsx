@@ -16,8 +16,7 @@ function formatBytes(bytes: number): string {
 }
 
 export function CmsListPage() {
-  const { items, loading, fetchItems, deleteItem, uploadItem } =
-    useCmsStore();
+  const { items, loading, fetchItems, deleteItem, uploadItem } = useCmsStore();
   const [uploadOpened, { open: openUpload, close: closeUpload }] =
     useDisclosure(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);

@@ -2,7 +2,7 @@ import { Accordion, Alert, Button, Card, Code, Group, Stack, Text, Title } from 
 import { IconAlertTriangle, IconRefresh, IconHome2 } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 import type { ErrorFallbackProps } from "@shared/ui";
-import { CMS_ROUTES, cmsPath } from "../config";
+import { CMS_ROUTES, cmsPath } from "./config";
 
 export function CmsErrorFallback({ error, reset }: ErrorFallbackProps) {
   return (

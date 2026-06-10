@@ -1,1 +1,1 @@
-export { UploadCmsAsset } from "./ui/UploadCmsAsset";
+export { UploadCmsAsset } from "./UploadCmsAsset";

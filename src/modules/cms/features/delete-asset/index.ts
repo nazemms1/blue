@@ -1,1 +1,1 @@
-export { DeleteCmsAsset } from "./ui/DeleteCmsAsset";
+export { DeleteCmsAsset } from "./DeleteCmsAsset";

@@ -15,7 +15,7 @@ import {
   IconArchive,
   IconDownload,
 } from "@tabler/icons-react";
-import type { CmsItem } from "../model/types";
+import type { CmsItem } from "./model/types";
 import { StatusBadge } from "@shared/ui";
 
 interface CmsAssetCardProps {
