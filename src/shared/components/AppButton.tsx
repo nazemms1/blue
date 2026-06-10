@@ -1,7 +1,7 @@
 import { Button, type ButtonProps } from "@mantine/core";
 import type { ReactNode } from "react";
 
-type AppButtonVariant = "primary" | "secondary" | "danger";
+type AppButtonVariant = "primary" | "secondary" | "danger" | "success";
 
 interface AppButtonProps extends Omit<ButtonProps, "variant" | "color"> {
   variant?: AppButtonVariant;
@@ -42,6 +42,22 @@ const variantStyles: Record<
           filter: "brightness(0.97)",
           boxShadow: "0 1px 4px rgba(59, 130, 246, 0.2)",
           transitionDuration: "60ms",
+        },
+      },
+    },
+  },
+  success: {
+    mantineVariant: "gradient",
+    styles: {
+      root: {
+        background: "linear-gradient(135deg, #10b981, #059669)",
+        boxShadow: "0 2px 8px rgba(16, 185, 129, 0.25), 0 1px 2px rgba(0,0,0,0.08)",
+        border: "none",
+        fontWeight: 600,
+        "&:hover:not([data-disabled])": {
+          filter: "brightness(1.08)",
+          boxShadow: "0 4px 16px rgba(16, 185, 129, 0.35)",
+          transform: "translateY(-1px)",
         },
       },
     },
@@ -99,7 +115,8 @@ export function AppButton({
   children,
   ...rest
 }: AppButtonProps) {
-  const { mantineVariant, color, styles } = variantStyles[variant];
+  const config = variantStyles[variant] || variantStyles.primary;
+  const { mantineVariant, color, styles } = config;
 
   return (
     <Button

@@ -18,6 +18,7 @@ import {
   BillingClientsPage,
   BillingReportsPage,
   BillingPaymentPage,
+  BillingDetailsPage,
 } from "@modules/billing/pages";
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -149,6 +150,16 @@ export const router = createBrowserRouter([
           <PermissionRoute permission="billing">
             <S>
               <BillingPaymentPage />
+            </S>
+          </PermissionRoute>
+        ),
+      },
+      {
+        path: "billing/:type/:id/view",
+        element: (
+          <PermissionRoute permission="billing">
+            <S>
+              <BillingDetailsPage />
             </S>
           </PermissionRoute>
         ),
