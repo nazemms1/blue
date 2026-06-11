@@ -1,31 +1,21 @@
 import { lazy } from "react";
 
+export const CmsVodGenresPage = lazy(() =>
+  import("../genres").then((m) => ({ default: m.CmsVodGenresPage })),
+);
+
 export const CmsVodMoviesPage = lazy(() =>
-  import("./CmsVodMoviesPage").then((m) => ({
-    default: m.CmsVodMoviesPage,
-  })),
+  import("../movies").then((m) => ({ default: m.CmsVodMoviesPage })),
 );
 
 export const CmsVodSeriesPage = lazy(() =>
-  import("./CmsVodSeriesPage").then((m) => ({
-    default: m.CmsVodSeriesPage,
-  })),
+  import("../series").then((m) => ({ default: m.CmsVodSeriesPage })),
 );
 
 export const CmsVodPlaysPage = lazy(() =>
-  import("./CmsVodPlaysPage").then((m) => ({
-    default: m.CmsVodPlaysPage,
-  })),
-);
-
-export const CmsVodGenresPage = lazy(() =>
-  import("./CmsVodGenresPage").then((m) => ({
-    default: m.CmsVodGenresPage,
-  })),
+  import("../plays").then((m) => ({ default: m.CmsVodPlaysPage })),
 );
 
 export const CmsVodTvShowsPage = lazy(() =>
-  import("./CmsVodTvShowsPage").then((m) => ({
-    default: m.CmsVodTvShowsPage,
-  })),
+  import("../tvshows").then((m) => ({ default: m.CmsVodTvShowsPage })),
 );
