@@ -79,12 +79,12 @@ export function useMusicStore() {
 
   const createSinger = useCallback(async (values: Partial<Singer>): Promise<Singer> => {
     await new Promise((r) => setTimeout(r, 500));
-    const singer: Singer = {
+    const singer = {
       id: generateId(),
       ...values,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-    };
+    } as Singer;
     setSingers((prev) => [singer, ...prev]);
     return singer;
   }, []);

@@ -1,4 +1,4 @@
-import { Stack, TextInput, Textarea, Select, Group, Card, Title, MultiSelect } from "@mantine/core";
+import { Stack, TextInput, Textarea, Group, Card, Title, MultiSelect } from "@mantine/core";
 import { AppButton } from "@shared/components";
 import { useState } from "react";
 import type { Singer } from "@modules/cms/model";
@@ -8,15 +8,9 @@ export interface SingerFormValues {
   nameAr: string;
   bio: string;
   genres: string[];
-  status: "draft" | "published" | "archived";
 }
 
 const GENRE_OPTIONS = ["Pop", "Classical", "Rock", "Hip Hop", "Jazz", "Traditional", "R&B"];
-const STATUS_OPTIONS = [
-  { value: "draft", label: "Draft" },
-  { value: "published", label: "Published" },
-  { value: "archived", label: "Archived" },
-];
 
 interface SingerFormProps {
   initial?: Singer;
@@ -31,7 +25,6 @@ export function SingerForm({ initial, onSubmit, loading, onCancel }: SingerFormP
     nameAr: initial?.nameAr ?? "",
     bio: initial?.bio ?? "",
     genres: initial?.genres ?? [],
-    status: initial?.status ?? "draft",
   });
   const [errors, setErrors] = useState<Partial<Record<keyof SingerFormValues, string>>>({});
 
@@ -68,13 +61,6 @@ export function SingerForm({ initial, onSubmit, loading, onCancel }: SingerFormP
           <Title order={5} mb="md">Bio</Title>
           <Stack gap="md">
             <Textarea label="Bio" placeholder="Singer biography" value={values.bio} onChange={(e) => set("bio", e.currentTarget.value)} minRows={3} autosize />
-          </Stack>
-        </Card>
-
-        <Card shadow="sm" p="lg" radius="md" withBorder>
-          <Title order={5} mb="md">Status</Title>
-          <Stack gap="md">
-            <Select label="Status" data={STATUS_OPTIONS} value={values.status} onChange={(v) => set("status", (v as SingerFormValues["status"]) ?? "draft")} />
           </Stack>
         </Card>
 

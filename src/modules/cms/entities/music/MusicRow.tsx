@@ -1,8 +1,7 @@
-import { Badge, Text, Group, ActionIcon, Tooltip, Avatar } from "@mantine/core";
-import { IconEdit, IconTrash, IconMicrophone2 } from "@tabler/icons-react";
-import type { Singer, Song, Album } from "@modules/cms/model";
-import { formatDate } from "@shared/utils";
-import { useNavigate } from "react-router-dom";
+import {   Text, Group, ActionIcon, Tooltip,   } from "@mantine/core";
+import { IconEdit, IconTrash,   } from "@tabler/icons-react";
+import type { Singer,   } from "@modules/cms/model";
+ import { useNavigate } from "react-router-dom";
 
 interface SingerRowActionsProps {
   singer: Singer;

@@ -103,12 +103,12 @@ export function useSeriesStore() {
 
   const createSeries = useCallback(async (values: Partial<Series>): Promise<Series> => {
     await new Promise((r) => setTimeout(r, 500));
-    const series: Series = {
+    const series = {
       id: generateId(),
       ...values,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-    };
+    } as Series;
     setSeriesList((prev) => [series, ...prev]);
     return series;
   }, []);

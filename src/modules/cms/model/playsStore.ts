@@ -19,12 +19,12 @@ export function usePlaysStore() {
 
   const createPlay = useCallback(async (values: Partial<Movie>): Promise<Movie> => {
     await new Promise((r) => setTimeout(r, 500));
-    const play: Movie = {
+    const play = {
       id: generateId(),
       ...values,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-    };
+    } as Movie;
     setPlays((prev) => [play, ...prev]);
     return play;
   }, []);

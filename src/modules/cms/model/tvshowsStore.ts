@@ -19,12 +19,12 @@ export function useTvShowsStore() {
 
   const createTvShow = useCallback(async (values: Partial<Series>): Promise<Series> => {
     await new Promise((r) => setTimeout(r, 500));
-    const show: Series = {
+    const show = {
       id: generateId(),
       ...values,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-    };
+    } as Series;
     setTvShows((prev) => [show, ...prev]);
     return show;
   }, []);

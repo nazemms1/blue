@@ -38,12 +38,12 @@ export function useChannelsStore() {
 
   const createChannel = useCallback(async (values: Partial<Channel>): Promise<Channel> => {
     await new Promise((r) => setTimeout(r, 500));
-    const channel: Channel = {
+    const channel = {
       id: generateId(),
       ...values,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-    };
+    } as Channel;
     setChannels((prev) => [channel, ...prev]);
     return channel;
   }, []);

@@ -1,11 +1,11 @@
-import { Stack, Text, Box, Badge, Group } from "@mantine/core";
+import { Stack, Text,   Badge,   } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { PageHeader } from "@shared/ui";
 import { DataTable, type DataTableColumn } from "@shared/ui";
 import { useGenresStore, type CmsGenre } from "@modules/cms/model";
 
 export function CmsVodGenresPage() {
-  const { genres, loading, fetchGenres, deleteGenre } = useGenresStore();
+  const { genres, loading, fetchGenres,   } = useGenresStore();
   const [search, setSearch] = useState("");
 
   useEffect(() => { fetchGenres(); }, [fetchGenres]);

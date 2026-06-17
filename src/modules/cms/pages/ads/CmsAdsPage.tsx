@@ -1,5 +1,5 @@
-import { Stack, Select, Text, Box, Badge, Group } from "@mantine/core";
-import { IconAd, IconPlus } from "@tabler/icons-react";
+import { Stack, Select, Text,  Badge, Group } from "@mantine/core";
+import {  IconPlus } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { PageHeader } from "@shared/ui";
 import { DataTable, type DataTableColumn } from "@shared/ui";
@@ -14,7 +14,7 @@ const placementColors: Record<string, string> = {
 
 export function CmsAdsPage() {
   const navigate = useNavigate();
-  const { ads, loading, fetchAds, deleteAd } = useAdsStore();
+  const { ads, loading, fetchAds,   } = useAdsStore();
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
 

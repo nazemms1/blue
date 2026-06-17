@@ -35,12 +35,12 @@ export function useAdsStore() {
 
   const createAd = useCallback(async (values: Partial<Ad>): Promise<Ad> => {
     await new Promise((r) => setTimeout(r, 500));
-    const ad: Ad = {
+    const ad = {
       id: generateId(),
       ...values,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-    };
+    } as Ad;
     setAds((prev) => [ad, ...prev]);
     return ad;
   }, []);

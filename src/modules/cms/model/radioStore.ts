@@ -30,12 +30,12 @@ export function useRadioStore() {
 
   const createStation = useCallback(async (values: Partial<RadioStation>): Promise<RadioStation> => {
     await new Promise((r) => setTimeout(r, 500));
-    const station: RadioStation = {
+    const station = {
       id: generateId(),
       ...values,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-    };
+    } as RadioStation;
     setStations((prev) => [station, ...prev]);
     return station;
   }, []);

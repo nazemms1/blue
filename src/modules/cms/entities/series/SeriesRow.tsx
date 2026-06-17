@@ -1,5 +1,5 @@
 import { Badge, Text, Group, ActionIcon, Tooltip } from "@mantine/core";
-import { IconEdit, IconTrash, IconStar } from "@tabler/icons-react";
+import { IconEdit, IconTrash,   } from "@tabler/icons-react";
 import type { Series } from "@modules/cms/model";
 import { formatDate } from "@shared/utils";
 import { useNavigate } from "react-router-dom";

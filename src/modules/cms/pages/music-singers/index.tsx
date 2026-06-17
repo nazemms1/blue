@@ -1,4 +1,4 @@
-import { Stack, Select, Text, Box, Group, Avatar } from "@mantine/core";
+import { Stack,   Text, Box, Group, Avatar } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { PageHeader } from "@shared/ui";

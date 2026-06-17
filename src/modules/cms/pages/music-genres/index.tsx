@@ -1,4 +1,4 @@
-import { Stack, Select, Text, Badge } from "@mantine/core";
+import { Stack,   Text, Badge } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { PageHeader } from "@shared/ui";
 import { DataTable, type DataTableColumn } from "@shared/ui";

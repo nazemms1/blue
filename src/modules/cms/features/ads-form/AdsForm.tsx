@@ -1,11 +1,11 @@
 import { Stack, TextInput, Select, Group, Card, Title, NumberInput } from "@mantine/core";
 import { AppButton } from "@shared/components";
 import { useState } from "react";
-import type { Ad } from "@modules/cms/model";
+import type { Ad, AdPlacement } from "@modules/cms/model";
 
 export interface AdsFormValues {
   title: string;
-  placement: string;
+  placement: AdPlacement;
   targetUrl: string;
   impressions: number;
   clicks: number;
@@ -73,7 +73,7 @@ export function AdsForm({ initial, onSubmit, loading, onCancel }: AdsFormProps) 
             <TextInput label="Title" placeholder="Campaign title" value={values.title} error={errors.title} required
               onChange={(e) => set("title", e.currentTarget.value)} />
             <Select label="Placement" data={PLACEMENT_OPTIONS} value={values.placement}
-              onChange={(v) => set("placement", v ?? "banner")} placeholder="Select placement" />
+              onChange={(v) => set("placement", (v as AdPlacement) ?? "banner")} placeholder="Select placement" />
             <TextInput label="Target URL" placeholder="https://example.com/landing" value={values.targetUrl} error={errors.targetUrl} required
               onChange={(e) => set("targetUrl", e.currentTarget.value)} />
           </Stack>
