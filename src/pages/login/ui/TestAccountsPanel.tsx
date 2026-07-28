@@ -7,7 +7,7 @@ import {
   Box,
   Avatar,
 } from "@mantine/core";
-import { IconPhoto, IconFileText, IconShieldHalf } from "@tabler/icons-react";
+import { IconPhoto, IconFileText, IconShieldHalf, IconUserCog } from "@tabler/icons-react";
 import type { Permission } from "@shared/types";
 
 interface TestAccount {
@@ -24,7 +24,7 @@ const TEST_ACCOUNTS: TestAccount[] = [
     email: "admin@blue.dev",
     password: "admin123",
     role: "Admin",
-    permissions: ["cms", "billing"],
+    permissions: ["cms", "billing", "userSettings"],
   },
   {
     name: "Media Editor",
@@ -51,6 +51,11 @@ const PERMISSION_META: Record<
     label: "Billing",
     color: "blue",
     icon: <IconFileText size={10} />,
+  },
+  userSettings: {
+    label: "User Settings",
+    color: "grape",
+    icon: <IconUserCog size={10} />,
   },
 };
 

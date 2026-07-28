@@ -24,7 +24,7 @@ export interface SelectOption {
   label: string;
 }
 
-export type Permission = "cms" | "billing";
+export type Permission = "cms" | "billing" | "userSettings";
 
 export interface User {
   id: string;

@@ -36,6 +36,7 @@ import {
   IconArrowLeft,
   IconCoins,
   IconCreditCard,
+  IconUserCog,
 } from "@tabler/icons-react";
 import { useState } from "react";
 import { useAuthContext } from "@app/providers";
@@ -46,6 +47,7 @@ import {
   type CmsNavItem,
   type CmsNavLink,
 } from "@modules/cms";
+import { USER_SETTINGS_WORKSPACE_ITEMS } from "@modules/user-settings";
 import classes from "./AppShellLayout.module.css";
 
 interface NavItem {
@@ -62,6 +64,12 @@ const ALL_NAV_ITEMS: NavItem[] = [
     href: "/billing",
     icon: IconCoins,
     permission: "billing",
+  },
+  {
+    label: "User Settings",
+    href: "/user-settings",
+    icon: IconUserCog,
+    permission: "userSettings",
   },
 ];
 
@@ -114,6 +122,9 @@ const MODULE_MENUS: Record<string, NavItem[]> = {
   cms: [
     // CMS sidebar menu is now managed from the cms module.
   ],
+  "user-settings": [
+    // User Settings sidebar menu is managed from the user-settings module.
+  ],
 };
 
 const ROUTE_LABELS: Record<string, string> = {
@@ -143,6 +154,9 @@ const ROUTE_LABELS: Record<string, string> = {
   clients: "Clients",
   reports: "Reports",
   payment: "Payment",
+  "user-settings": "User Settings",
+  theme: "Theme",
+  playlists: "Playlist",
 };
 
 function getInitials(name: string) {
@@ -600,6 +614,60 @@ export function AppShellLayout() {
                   </Box>
                   {CMS_WORKSPACE_ITEMS.filter((item) => can(item.permission)).map((item) =>
                     renderCmsItem(item, moduleKey),
+                  )}
+
+                  <Box mt={24} px={12}>
+                    <Divider
+                      my="md"
+                      label={
+                        <Text
+                          size="9px"
+                          fw={800}
+                          c="white"
+                          style={{
+                            textTransform: "uppercase",
+                            letterSpacing: "0.1em",
+                            opacity: 0.8,
+                          }}
+                        >
+                          System Tools
+                        </Text>
+                      }
+                      labelPosition="center"
+                      styles={{ label: { backgroundColor: "transparent" } }}
+                    />
+                  </Box>
+
+                  <UnstyledButton
+                    onClick={() => navigate("/select-module")}
+                    className={`${classes.navItem} ${classes.switchButton}`}
+                  >
+                    <IconArrowLeft size={19} className={classes.navIcon} />
+                    <Text size="sm">Switch Module</Text>
+                  </UnstyledButton>
+                </Stack>
+              );
+            }
+
+            if (activeModuleKey === "user-settings") {
+              return (
+                <Stack gap={4}>
+                  <Box px={12} mb={12}>
+                    <Text
+                      size="10px"
+                      fw={800}
+                      c="white"
+                      style={{
+                        letterSpacing: "0.2em",
+                        textTransform: "uppercase",
+                        opacity: 0.9,
+                      }}
+                    >
+                      USER SETTINGS
+                    </Text>
+                  </Box>
+                  {USER_SETTINGS_WORKSPACE_ITEMS.filter((item) => can(item.permission)).map((item) =>
+                    renderCmsLink(item, moduleKey),
                   )}
 
                   <Box mt={24} px={12}>

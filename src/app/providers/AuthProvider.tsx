@@ -24,7 +24,7 @@ const TEST_ACCOUNTS: TestAccount[] = [
     email: "admin@blue.dev",
     password: "admin123",
     role: "admin",
-    permissions: ["cms", "billing"],
+    permissions: ["cms", "billing", "userSettings"],
   },
   {
     id: "2",

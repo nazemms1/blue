@@ -8,6 +8,7 @@ import { LoadingOverlay } from "@shared/ui";
 import { LoginPage } from "@pages/login";
 import { SelectModulePage } from "@pages/select-module";
 import { cmsRoutes } from "@modules/cms";
+import { userSettingsRoutes } from "@modules/user-settings";
 import { AppErrorFallback } from "@app/ui/AppErrorFallback";
 import {
   BillingDashboardPage,
@@ -62,6 +63,8 @@ export const router = createBrowserRouter([
       },
 
       ...cmsRoutes,
+
+      ...userSettingsRoutes,
 
       {
         path: "billing",
